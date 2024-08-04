@@ -1,83 +1,160 @@
-const funkos = ["1-ANT-MAN $22000", "2-CAPITAN AMERICA $60000", "3-BLACK PANTHER $45000", "4-BLACK WIDOW $33000", "5-GROOT $25000", "6-IRON MAN $65000", "7-IRON SPIDER $58000", "8-BATMAN $60000", "9-JOKER $45000", "10-THANOS $ 32000"]
-
-
-let total = 0
-let bandera = true
-let nombre = prompt("Ingrese su nombre")
-let compra = []
-function logicaDeCompra(productos, precios) {
-    compra.push(productos)
-    total += precios
-
-}
-while (bandera) {
-    let menu = "Hola " + nombre + " Bienvenid@\n  Elija su Personaje Funko Pop de MARVEL-DC\n" + funkos.join("\n")
-    let seleccion = prompt(menu)
-    switch (parseInt(seleccion)) {
-        case 1:
-            bandera = confirm("Desea seguir comprando")
-            logicaDeCompra("ANT-MAN", 22000)
-            break;
-        case 2:
-            bandera = confirm("Desea seguir comprando")
-            logicaDeCompra("CAPITAN AMERICA", 60000)
-            break;
-        case 3:
-            bandera = confirm("Desea seguir comprando")
-            logicaDeCompra("BLACK PANTHER", 45000)
-            break;
-        case 4:
-            bandera = confirm("Desea seguir comprando")
-            logicaDeCompra("BLACK WIDOW", 33000)
-            break;
-        case 5:
-            bandera = confirm("Desea seguir comprando")
-            logicaDeCompra(" GROOT", 25000)
-            break;
-        case 6:
-            bandera = confirm("Desea seguir comprando")
-            logicaDeCompra("IRON MAN", 65000)
-            break;
-        case 7:
-            bandera = confirm("Desea seguir comprando")
-            logicaDeCompra("IRON SPIDER", 58000)
-            break;
-        case 8:
-            bandera = confirm("Desea seguir comprando")
-            logicaDeCompra("BATMAN", 60000)
-            break;
-        case 9:
-            bandera = confirm("Desea seguir comprando")
-            logicaDeCompra("JOKER", 45000)
-            break;
-        case 10:
-            bandera = confirm("Desea seguir comprando")
-            logicaDeCompra("THANOS", 32000)
-            break;
-        default:
-            alert("Opcion invalida, vuelva a intentar")
-            break;
+const funkos = [
+    {
+        id: 1,
+        nombre: "Ant-Man",
+        precio: 22000,
+        img: "img/ant-man.jpg",
+    },
+    {
+        id: 2,
+        nombre: "Capitan America",
+        precio: 60000,
+        img: "img/capitan-america.jpg"
+    },
+    {
+        id: 3,
+        nombre: "Black Panther",
+        precio: 45000,
+        img: "img/blackpanther.jpg"
+    },
+    {
+        id: 4,
+        nombre: "Black Widow",
+        precio: 33000,
+        img: "img/black-widow.jpg"
+    },
+    {
+        id: 5,
+        nombre: "Groot",
+        precio: 25000,
+        img: "img/groot.jpg"
+    },
+    {
+        id: 6,
+        nombre: "Iron Man",
+        precio: 65000,
+        img: "img/iron-man.jpg"
+    },
+    {
+        id: 7,
+        nombre: "Iron Spider",
+        precio: 58000,
+        img: "img/iron-spider.jpg"
+    },
+    {
+        id: 8,
+        nombre: "Batman",
+        precio: 60000,
+        img: "img/batman.jpg"
+    },
+    {
+        id: 9,
+        nombre: "Joker",
+        precio: 45000,
+        img: "img/jocker.jpg"
+    },
+    {
+        id: 10,
+        nombre: "Thanos",
+        precio: 32000,
+        img: "img/thanos.jpg"
     }
+]
+
+const productosSection = document.getElementById("productos")
+const carritoItems = document.getElementById("carrito-items")
+const totalSpan = document.getElementById("total")
+let carrito = JSON.parse(localStorage.getItem("carrito")) || []
+
+//para buscar
+const buscadorFunko = document.getElementById("buscador-funko")
+buscadorFunko.addEventListener("input", (e) => {
+    const searchTerm = e.target.value.toLowerCase()
+    const filteredFunkos = funkos.filter(funko => funko.nombre.toLowerCase().includes(searchTerm))
+    mostrarProductos(filteredFunkos)
+})
+
+function mostrarProductos(mostrar) {
+    productosSection.innerHTML = ""
+    mostrar.forEach(el => {
+        productosSection.innerHTML +=
+            `<div class="productoss">
+        <h2>${el.nombre}</h2>
+        <p>$${el.precio}</p>
+        <img src="${el.img}" class= "funkosImg"/>
+        <button class="boton" onclick="agregarCarrito(${el.id})"> comprar</button>
+        </div>`
+    })
 }
-let compraMensaje = "Productos a comprar\n" + compra.join("\n") + " Total a pagar $" + total
-alert(compraMensaje)
 
-pagar()
-function pagar() {
+funkos.forEach((el) => {
+    productosSection.innerHTML +=
+        `<div class="productoss">
+    <h2>${el.nombre}</h2>
+    <p>$${el.precio}</p>
+    <img src="${el.img}" class= "funkosImg"/>
+    <button class="boton" onclick="agregarCarrito(${el.id})"> comprar</button>
+    </div>`
+})
 
-    let metodoDePago = parseInt(prompt("Ingrese una forma de pago\n 1-Efectivo\n 2-Tarjeta de Credito "))
-    if (metodoDePago === 1) {
-        alert("Precio a pagar en efectivo : $ " + total + "\n Gracias por adquirir nuestros Funkos Pop Marvel-DC");
-    } else if (metodoDePago === 2) {
-        alert("Precio a pagar con Tarjeta : $ " + total + "\n Gracias por adquirir nuestros Funkos Pop Marvel-DC")
+function agregarCarrito(id) {
+    const producto = funkos.find(el => el.id === id)
+    const productosEnCarrito = carrito.find(item => item.producto.id === id)
+    if (productosEnCarrito) {
+        productosEnCarrito.cantidad++
     } else {
-        alert("Metodo de ingresado incorrecto; el precio a pagar es: $ " + total)
-        let = intentarOtraVez = confirm("Quieres intentarlo de nuevo")
-        if (intentarOtraVez) {
-            pagar()
-        } else {
-            alert(nombre + " Gracias por visitar Tienda MARVEL-DC")
+        carrito.push({ producto, cantidad: 1 })
+    }
+    actulizarCarrito()
+}
+
+function eliminarCompra(id,) {
+    const productosEnCarrito = carrito.find(item => item.producto.id === id)
+    if (productosEnCarrito) {
+        productosEnCarrito.cantidad--
+
+        if (productosEnCarrito.cantidad <= 0) {
+            carrito = carrito.filter(item => item.producto.id !== id)
         }
     }
+    actulizarCarrito()
 }
+
+function actulizarCarrito() {
+    carritoItems.innerHTML = ""
+    let total = 0
+    carrito.forEach(item => {
+        const { producto, cantidad } = item
+        carritoItems.innerHTML +=
+            `<div classs="carrito-items">
+        <h3>${producto.nombre}</h3>
+        <p>${producto.precio}</p>
+        <p>Cantidad ${cantidad}</p>
+        <button onclick= "agregarCarrito(${producto.id})">+</button>
+        <button onclick= "eliminarCompra(${producto.id})">-</button>
+        </div>`
+        total += producto.precio * cantidad
+    })
+    totalSpan.innerText = total
+    localStorage.setItem("carrito", JSON.stringify(carrito))
+}
+
+document.getElementById("finalizar-compras").addEventListener("click", () => {
+    const mensajeTotal = document.getElementById("mensaje-total")
+    const total = totalSpan.innerText
+    mensajeTotal.innerText = `Total a pagar : $${total}`
+    carrito = []
+    actulizarCarrito()
+})
+
+
+
+
+
+
+
+
+
+
+
 

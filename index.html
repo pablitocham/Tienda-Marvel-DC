@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/logomd.png" type="image/x-icon">
     <title>TIENDA MARVEL-DC</title>
 </head>
+
 <body>
     <header>
         <img src="img/logomd.png" alt="">
-        <nav>
-            <li></li>
-            <li></li>
-            <li></li>
-        </nav>
-        <h1>TIENDA MARVEL-DC</h1>
     </header>
-
+    <main id="principal">
+        <div id="inicio"></div>
+        <h1>TIENDA MARVEL-DC</h1>
+        <p>Bienveni@ a nuestra tienda</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, minus tenetur adipisci quaerat suscipit ab?
+            Consequuntur earum nisi possimus? Consequuntur, maiores? Non sint, laborum at aperiam quis quod in dolor!
+        </p>
+        <input type="text" id="buscador-funko" placeholder="Encuentra tu Funko Marvel">
+    </main>
+    <section id="productos"></section>
+    <section id="carrito">
+        <h2>Carrito de Compra</h2>
+        <div id="carrito-items"></div>
+        <p>A pagar $<span id="total">0</span></p>
+        <button id="finalizar-compras">Finalizar Compra</button>
+        <div id="mensaje-total" class="mensaje"></div>
+    </section>
     <script src="main.js" defer></script>
 </body>
+
 </html>
