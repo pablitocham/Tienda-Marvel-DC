@@ -7,7 +7,7 @@ const funkos = [
     },
     {
         id: 2,
-        nombre: "Capitan America",
+        nombre: "Captain America",
         precio: 60000,
         img: "img/capitan-america.jpg"
     },
@@ -105,19 +105,40 @@ function agregarCarrito(id) {
     } else {
         carrito.push({ producto, cantidad: 1 })
     }
+
     actulizarCarrito()
+    Swal.fire({
+        title: "Agregaste ",
+        imageUrl: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdDFvb3ZkNDY1N25wNHJsbHQ4eTc2MXBvaXRuNjNoYmswazZwOGtwbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ckeHl52mNtoq87veET/giphy.gif",
+        text: `Funko ${producto.nombre}`,
+        confirmButtonText: "aceptar",
+
+    })
 }
 
-function eliminarCompra(id,) {
-    const productosEnCarrito = carrito.find(item => item.producto.id === id)
-    if (productosEnCarrito) {
-        productosEnCarrito.cantidad--
-
-        if (productosEnCarrito.cantidad <= 0) {
-            carrito = carrito.filter(item => item.producto.id !== id)
+function eliminarCompra(id) {
+    const producto = funkos.find(el => el.id === id)
+    Swal.fire({
+        title: "¿Desea eliminar?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "eliminar",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const productosEnCarrito = carrito.find(item => item.producto.id === id)
+            if (productosEnCarrito) {
+                productosEnCarrito.cantidad--
+                if (productosEnCarrito.cantidad <= 0) {
+                    carrito = carrito.filter(item => item.producto.id !== id)
+                }
+                actulizarCarrito()
+                Swal.fire({
+                   title: "eliminado",
+                })
+            }
         }
-    }
-    actulizarCarrito()
+    })
 }
 
 function actulizarCarrito() {
@@ -142,11 +163,28 @@ function actulizarCarrito() {
 document.getElementById("finalizar-compras").addEventListener("click", () => {
     const mensajeTotal = document.getElementById("mensaje-total")
     const total = totalSpan.innerText
-    mensajeTotal.innerText = `Total a pagar : $${total}`
-    carrito = []
-    actulizarCarrito()
+    if (carrito.length === 0) {
+        Swal.fire({
+            title: "No tienes FUNKOS agregados",
+            icon: "warning",
+            confirmButtonText: "Aceptar"
+        })
+    } else {
+        mensajeTotal.innerText = `Total a pagar : $${total}`
+        carrito = []
+        actulizarCarrito()
+        Swal.fire({
+            title: "GRACIAS POR COMPRAR EN TIENDA MARVEL-DC",
+            imageUrl: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3NuMnl4NmJ2cGc5c28wNmN2dmZ2YTc1NGFocWJ4anVxZmFjZ2F6MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vBjLa5DQwwxbi/giphy.gif",
+            confirmButtonText: "aceptar",
+        })
+    }
 })
 
+
+ document.addEventListener("DOMContentLoaded",()=>{
+     actulizarCarrito()
+ } )
 
 
 

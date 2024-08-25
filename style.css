@@ -14,21 +14,21 @@ header {
     height: 60px;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(48, 44, 44)
+    background-color: gainsboro;
+}
+
+header a {
+    text-decoration: none;
+    margin-right: 30px;
+    font-weight: bolder;
+}
+
+header a:hover {
+    color: blue;
 }
 
 img {
     width: 20%;
-}
-
-nav {
-    margin-right: 30px;
-}
-
-ul {
-    display: flex;
-    list-style: none;
-    gap: 10px;
 }
 
 main {
